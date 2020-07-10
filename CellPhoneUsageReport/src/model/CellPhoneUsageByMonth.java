@@ -1,4 +1,3 @@
-
 package model;
 
 /**
@@ -6,12 +5,12 @@ package model;
  * @author nedar
  */
 public class CellPhoneUsageByMonth {
-    
+
     private String employeeId;
     private int year;
-    private int month;
-    private long minutesUsed;
-    private long dataUsed;
+    private String month;
+    private Double minutesUsed;
+    private Double dataUsed;
 
     public String getEmployeeId() {
         return employeeId;
@@ -29,34 +28,33 @@ public class CellPhoneUsageByMonth {
         this.year = year;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 
-    public long getMinutesUsed() {
+    public Double getMinutesUsed() {
         return minutesUsed;
     }
 
-    public void setMinutesUsed(long minutesUsed) {
+    public void setMinutesUsed(Double minutesUsed) {
         this.minutesUsed = minutesUsed;
     }
 
-    public long getDataUsed() {
+    public Double getDataUsed() {
         return dataUsed;
     }
 
-    public void setDataUsed(long dataUsed) {
+    public void setDataUsed(Double dataUsed) {
         this.dataUsed = dataUsed;
     }
-    
+
     @Override
     public String toString() {
         return "CellPhoneUsageByMonth [ employeeId = " + employeeId + ", year = " + year + ", month = " + month + ", minutesUsed = " + minutesUsed + ", dataUsed = " + dataUsed + "]";
     }
-    
-    
+
 }

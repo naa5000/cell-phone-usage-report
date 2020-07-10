@@ -1,13 +1,11 @@
-
 package model;
-
 
 /**
  *
  * @author nedar
  */
 public class CellPhone {
-    
+
     private String employeeId;
     private String employeeName;
     private String purchaseDate;
@@ -44,11 +42,13 @@ public class CellPhone {
     public void setModel(String model) {
         this.model = model;
     }
-    
+
     @Override
     public String toString() {
-        return "CellPhone [ employeeId = " + employeeId + ", employeeName = " + employeeName + ", purchaseDate = " + purchaseDate + ", model = " + model + "]";
+        return  "EmployeeId: " + employeeId + 
+                "\nEmployeeName: " + employeeName + 
+                "\nModel: " + model + 
+                "\nPurchaseDate: " + purchaseDate; 
     }
-    
-    
+
 }

@@ -22,8 +22,8 @@ import model.CellPhoneUsageByMonth;
  * @author nedar
  */
 public class CsvParser {
-    
-     public  List<CellPhone> parseCellPhonesFromCSV(String fileName) throws IOException {
+
+    public List<CellPhone> parseCellPhonesFromCSV(String fileName) throws IOException {
 
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
@@ -35,17 +35,15 @@ public class CsvParser {
             while (mi.hasNext()) {
                 CellPhone current = mi.next();
                 cellPhones.add(current);
+                //Debug Statement
                 System.out.println(current);
             }
         }
 
-        //Debug Statement
-        //System.out.println("number of cell phones: " + cellPhones.size());
-        
         return cellPhones;
     }
-     
-     public  List<CellPhoneUsageByMonth> parseCellPhoneUsageReportsFromCSV(String fileName) throws IOException {
+
+    public List<CellPhoneUsageByMonth> parseCellPhoneUsageReportsFromCSV(String fileName) throws IOException {
 
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
@@ -57,14 +55,12 @@ public class CsvParser {
             while (mi.hasNext()) {
                 CellPhoneUsageByMonth current = mi.next();
                 cellPhoneUsagesByMonth.add(current);
+                //Debug Statement
                 System.out.println(current);
             }
         }
-        
-        //Debug Statement
-        //System.out.println("number of cellPhoneUsagesByMonth: " + cellPhoneUsageByMonth.size());
-        
+
         return cellPhoneUsagesByMonth;
     }
-    
+
 }

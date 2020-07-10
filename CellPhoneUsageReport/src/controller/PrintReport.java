@@ -1,6 +1,7 @@
-package view;
+package controller;
 
-import controller.CsvParser;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import model.CellPhone;
 import model.CellPhoneUsageByMonth;
 import model.Report;
+import view.CellPhoneUsageReport;
 
 /**
  *
@@ -21,30 +23,31 @@ import model.Report;
  */
 public class PrintReport implements Printable, ActionListener {
 
-    
-    @Override
-    public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+    private final int linesPerPage = 50;
 
-        if (page > 0) {
-            /* We have only one page, and 'page' is zero-based */
+  
+    @Override
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
+        
+        String sTable[] = getReport();
+        
+        if (pageIndex * linesPerPage >= sTable.length) {
             return NO_SUCH_PAGE;
         }
-
-        /* User (0,0) is typically outside the imageable area, so we must
-         * translate by the X and Y values in the PageFormat to avoid clipping
-         */
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.translate(pf.getImageableX(), pf.getImageableY());
-
-        /* Now we perform our rendering */
-        String report = getReport();
-        
-        g.drawString(report, 100, 100);
-
-        /* tell the caller that this page is part of the printed document */
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setFont(new Font("Monospaced", Font.PLAIN, 9));
+        g2.setPaint(Color.black);
+        int x = 100;
+        int y = 100;
+        for (int i = linesPerPage * pageIndex; i < sTable.length
+                && i < linesPerPage * (pageIndex + 1); i++) {
+            g2.drawString(sTable[i], x, y);
+            y += 10;
+        }
         return PAGE_EXISTS;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(this);
@@ -58,7 +61,7 @@ public class PrintReport implements Printable, ActionListener {
         }
     }
 
-    private String getReport() {
+    private String[] getReport() {
 
         //TODO: Get these from database instead of local files.
         String cellPhonesCSVFilePath = "src/data/cell_phones.txt";
@@ -68,20 +71,20 @@ public class PrintReport implements Printable, ActionListener {
 
         List<CellPhone> cellPhones = new ArrayList<>();
         try {
-            csvParser.parseCellPhonesFromCSV(cellPhonesCSVFilePath);
+            cellPhones = csvParser.parseCellPhonesFromCSV(cellPhonesCSVFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(CellPhoneUsageReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<CellPhoneUsageByMonth> cellPhoneUsagesByMonth = new ArrayList<>();
+        try {
+            cellPhoneUsagesByMonth = csvParser.parseCellPhoneUsageReportsFromCSV(cellPhoneUsageByMonthCSVFilePath);
         } catch (IOException ex) {
             Logger.getLogger(CellPhoneUsageReport.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        List<CellPhoneUsageByMonth> cellPhoneUsagesByMonth = new ArrayList<>();
-        try {
-            csvParser.parseCellPhoneUsageReportsFromCSV(cellPhoneUsageByMonthCSVFilePath);
-        } catch (IOException ex) {
-            Logger.getLogger(CellPhoneUsageReport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         Report report = new Report(cellPhones, cellPhoneUsagesByMonth);
+
+        return report.getReport().split("\\r?\\n");
         
-        return report.getReport();
     }
 }

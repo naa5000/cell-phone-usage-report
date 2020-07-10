@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.PrintReport;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
@@ -21,8 +22,6 @@ public class CellPhoneUsageReport {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-        PrintReport printReport = new PrintReport();
 
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         JFrame f = new JFrame("Print Cell Phone Usage Report Printer");
@@ -40,7 +39,6 @@ public class CellPhoneUsageReport {
         f.add("Center", printButton);
         f.pack();
         f.setVisible(true);
-
     }
 
 }
