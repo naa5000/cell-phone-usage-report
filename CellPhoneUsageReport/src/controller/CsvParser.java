@@ -23,7 +23,7 @@ import model.CellPhoneUsageByMonth;
  */
 public class CsvParser {
     
-     public void parseCellPhonesFromCSV(String fileName) throws IOException {
+     public  List<CellPhone> parseCellPhonesFromCSV(String fileName) throws IOException {
 
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
@@ -38,27 +38,33 @@ public class CsvParser {
                 System.out.println(current);
             }
         }
+
+        //Debug Statement
+        //System.out.println("number of cell phones: " + cellPhones.size());
         
-        System.out.println("number of courses into list: " + cellPhones.size());
+        return cellPhones;
     }
      
-     public void parseCellPhoneUsageReportsFromCSV(String fileName) throws IOException {
+     public  List<CellPhoneUsageByMonth> parseCellPhoneUsageReportsFromCSV(String fileName) throws IOException {
 
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
         ObjectReader oReader = csvMapper.reader(CellPhoneUsageByMonth.class).with(schema);
-        List<CellPhoneUsageByMonth> cellPhoneUsageByMonth = new ArrayList<>();
+        List<CellPhoneUsageByMonth> cellPhoneUsagesByMonth = new ArrayList<>();
 
         try (Reader reader = new FileReader(fileName)) {
             MappingIterator<CellPhoneUsageByMonth> mi = oReader.readValues(reader);
             while (mi.hasNext()) {
                 CellPhoneUsageByMonth current = mi.next();
-                cellPhoneUsageByMonth.add(current);
+                cellPhoneUsagesByMonth.add(current);
                 System.out.println(current);
             }
         }
         
-        System.out.println("number of courses into list: " + cellPhoneUsageByMonth.size());
+        //Debug Statement
+        //System.out.println("number of cellPhoneUsagesByMonth: " + cellPhoneUsageByMonth.size());
+        
+        return cellPhoneUsagesByMonth;
     }
     
 }

@@ -52,10 +52,8 @@ public class CellPhoneUsageByMonth {
     public void setDataUsed(long dataUsed) {
         this.dataUsed = dataUsed;
     }
-
-   
     
-       @Override
+    @Override
     public String toString() {
         return "CellPhoneUsageByMonth [ employeeId = " + employeeId + ", year = " + year + ", month = " + month + ", minutesUsed = " + minutesUsed + ", dataUsed = " + dataUsed + "]";
     }

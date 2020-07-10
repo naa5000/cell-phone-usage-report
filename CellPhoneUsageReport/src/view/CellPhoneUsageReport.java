@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cellphoneusagereport;
+package view;
 
-import controller.CsvParser;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 /**
  *
@@ -20,26 +21,26 @@ public class CellPhoneUsageReport {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        String cellPhonesCSVFilePath = "src/data/cell_phones.txt";
-        String cellPhoneUsageByMonthCSVFilePath = "src/data/cell_phone_usages_by_month.txt";
-        
-        CsvParser csvParser = new CsvParser();
-        
-        
-        try {
-            csvParser.parseCellPhonesFromCSV(cellPhonesCSVFilePath);
-        } catch (IOException ex) {
-            Logger.getLogger(CellPhoneUsageReport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            csvParser.parseCellPhoneUsageReportsFromCSV(cellPhoneUsageByMonthCSVFilePath);
-        } catch (IOException ex) {
-            Logger.getLogger(CellPhoneUsageReport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      
-        
+       
+        PrintReport printReport = new PrintReport();
+
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        JFrame f = new JFrame("Print Cell Phone Usage Report Printer");
+
+        f.setSize(220, 400);
+        f.setLocationRelativeTo(null);
+
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        JButton printButton = new JButton("Print Cell Phone Usage Report");
+        printButton.addActionListener(new PrintReport());
+        f.add("Center", printButton);
+        f.pack();
+        f.setVisible(true);
+
     }
-    
+
 }
