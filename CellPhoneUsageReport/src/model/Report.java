@@ -45,7 +45,7 @@ public class Report {
                 .append("\nAverage Data: ").append(getAverageData())
                 .append("\n")
                 .append("\nDetails\n\n").append(getCellMinutesUsage())
-                .append("\nEnd or Report");
+                .append("\nEnd of Report");
 
         //Debug
         System.out.print(sb.toString());
@@ -108,6 +108,7 @@ public class Report {
             //Add employee cell phone info
             for (int i = 0; i < cellPhones.size(); i++) {
                 if (entry.getKey().equals(cellPhones.get(i).getEmployeeId())) {
+                    sb.append("\n----------------------\n");
                     sb.append(cellPhones.get(i));
                     break;
                 }
