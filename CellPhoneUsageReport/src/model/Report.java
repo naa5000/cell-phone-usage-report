@@ -113,6 +113,9 @@ public class Report {
                     break;
                 }
             }
+            
+            //TODO: Sort by Month
+            
             //Add minutes
             sb.append("\n\nMinutes Used\n");
             for (Map.Entry<Integer, Map<String, List<Double>>> entry2 : entry.getValue().entrySet()) {
@@ -222,7 +225,7 @@ public class Report {
     private String getColumns(Map<String, List<Double>> inputMap) {
         StringBuilder sb = new StringBuilder();
 
-        int maxColumnWidth = 12;
+        int maxColumnWidth = 8;
 
         for (Map.Entry<String, List<Double>> entry : inputMap.entrySet()) {
             StringBuilder value = new StringBuilder();

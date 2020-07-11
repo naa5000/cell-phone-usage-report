@@ -23,7 +23,7 @@ import view.CellPhoneUsageReport;
  */
 public class PrintReport implements Printable, ActionListener {
 
-    private final int linesPerPage = 50;
+    private final int linesPerPage = 30;
 
   
     @Override
@@ -37,7 +37,11 @@ public class PrintReport implements Printable, ActionListener {
         Graphics2D g2 = (Graphics2D) g;
         g2.setFont(new Font("Monospaced", Font.PLAIN, 9));
         g2.setPaint(Color.black);
-        int x = 100;
+        Paper copy = pf.getPaper();
+        copy.setSize(600, pf.getHeight());
+        pf.setPaper(copy);
+        
+        int x = 20;
         int y = 100;
         for (int i = linesPerPage * pageIndex; i < sTable.length
                 && i < linesPerPage * (pageIndex + 1); i++) {
